@@ -1,0 +1,41 @@
+name: Spec Gate
+
+# Verifica que cada Pull Request enlace a una spec que exista en el repositorio.
+# Si un PR de verdad no necesita spec (p. ej. solo documentación), ponle la
+# etiqueta "sin-spec": la excepción queda visible en el propio PR.
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened, labeled, unlabeled]
+
+permissions:
+  contents: read
+
+jobs:
+  spec-link:
+    name: El PR enlaza a una spec existente
+    runs-on: ubuntu-latest
+    if: ${{ !contains(github.event.pull_request.labels.*.name, 'sin-spec') }}
+    steps:
+      - name: Descargar el repositorio
+        uses: actions/checkout@v4
+
+      - name: Verificar enlace a la spec
+        env:
+          # Se pasa por variable de entorno (no se interpola en el script)
+          # para evitar inyección de comandos desde la descripción del PR.
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          spec=$(printf '%s' "$PR_BODY" | grep -oE 'docs/specs/SPEC-[0-9]+[A-Za-z0-9_.-]*\.md' | head -n 1 || true)
+
+          if [ -z "$spec" ]; then
+            echo "::error::El PR debe enlazar a una spec, por ejemplo: docs/specs/SPEC-001-nombre.md"
+            exit 1
+          fi
+
+          if [ ! -f "$spec" ]; then
+            echo "::error::La spec '$spec' no existe en el repositorio."
+            exit 1
+          fi
+
+          echo "OK: este PR referencia $spec"
