@@ -7,8 +7,9 @@ La idea en una línea: **la IA escribe código rápido, pero necesita contexto e
 ## Qué hay en este repositorio
 
 ```
-spec-driven-ejemplo/
+spec-driven-sample/
 ├── README.md                     ← estás aquí
+├── LICENSE                       ← MIT
 ├── AGENTS.md                     ← reglas que cualquier IA debe leer primero
 ├── CHECKLIST.md                  ← las 3 preguntas para aplicarlo mañana
 ├── plantillas/
@@ -77,4 +78,8 @@ No distingue qué herramienta generó el código: distingue **procesos**. Si un 
 
 - Los archivos de ejemplo son **ilustrativos**: adáptalos a tu proyecto, no los copies tal cual.
 - Si tu herramienta de IA usa un archivo de instrucciones propio (por ejemplo `CLAUDE.md`, `.github/copilot-instructions.md` o reglas de Cursor), puedes dejarlo apuntando a `AGENTS.md` para mantener una sola fuente de verdad.
-- Elige la licencia que prefieras antes de publicar el repositorio.
+- Licencia MIT: puedes copiar y adaptar todo el contenido.
+
+## ¿Quieres la versión completa?
+
+Este repositorio es la **versión corta** de la metodología, pensada para entenderla en 15 minutos. Si quieres el flujo completo con 8 prompts de documentación, workflows de seguridad (SAST, SCA, secretos, DAST), hooks de Git y un script de inicialización bilingüe, mira [**plantilla-dev-ia**](https://github.com/tecnochui/plantilla-dev-ia).
